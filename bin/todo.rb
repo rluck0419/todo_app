@@ -68,12 +68,6 @@ class Todo
 
       welcome
 
-      # todo_number = "1"
-      # tasks.each do |new_tasks|
-        # puts "#{todo_number} - #{new_tasks}"
-        # todo_number = (todo_number.to_i + 1).to_s
-      # end
-
       tasks.each do |task|
         if tasks.length > length
           todo_number = (tasks.index(task).to_i + 1).to_s
