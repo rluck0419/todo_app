@@ -39,13 +39,12 @@ class App
     number.to_i <= items.length
   end
 
-  def get_input
-    puts "\nEnter a task number to mark as complete. Or, enter a new task."
-    gets.chomp
-  end
-
-  def get_input_again
-    puts "Sorry? Try another number. Or, enter a new task."
+  def get_input(again)
+    if again
+      puts "Sorry? Try another number. Or, enter a new task."
+    else
+      puts "\nEnter a task number to mark as complete. Or, enter a new task."
+    end
     gets.chomp
   end
 
@@ -53,19 +52,22 @@ class App
     tasks = tasks_from_file
     length = tasks.length
     completed = []
+    asked = false
 
     display_each_item(tasks)
 
     while tasks.length > 0
-      marked = get_input
+      marked = get_input(asked)
+      asked = true
 
       # loop for invalid input (number too high)
       if number_too_high?(marked, tasks)
         loop do
-          marked = get_input_again
+          marked = get_input(asked)
           break if number_in_range?(marked, tasks)
         end
       end
+      asked = false
 
       # add a new task to list, or set 'marked' for marking a existing task as complete
       if new_task?(marked)
