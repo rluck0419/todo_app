@@ -22,6 +22,17 @@ class Todo
     end
   end
 
+  def display_completed_items(items)
+    puts "\ncompleted tasks: \n"
+    items.each do |item|
+      puts "- #{item}"
+    end
+  end
+
+  def matches_index?(items, item, marked_index)
+    items.index(item) == marked_index - 1
+  end
+
   def number_too_high?(number, items)
     number.to_i > items.length
   end
@@ -71,36 +82,23 @@ class Todo
       tasks.each do |task|
         if tasks.length > length
           todo_number = (tasks.index(task).to_i + 1).to_s
-          tasks.each do |new_tasks|
-            puts "#{todo_number} - #{new_tasks}"
-            todo_number = (todo_number.to_i + 1).to_s
-          end
+          display_each_item(tasks)
           length += 1
           break
         end
 
-        if tasks.index(task) == marked - 1
+        if matches_index?(tasks, task, marked)
           # completed = completed.push(tasks[marked-1])
 
           completed.push(tasks.delete_at(marked - 1))
           length -= 1
 
           todo_number = (tasks.index(task).to_i + 1).to_s
-          tasks.each do |new_tasks|
-            puts "#{todo_number} - #{new_tasks}"
-            todo_number = (todo_number.to_i + 1).to_s
-          end
+          display_each_item(tasks)
         end
       end
 
-      puts "\ncompleted tasks: \n"
-      completed.each do |something|
-        # if tasks[0].length > 1
-        #   puts "- #{task[0]}"
-        # else
-          puts "- #{something}"
-        # end
-      end
+      display_completed_items(completed)
     end
   end
 end
